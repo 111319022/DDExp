@@ -1,0 +1,18 @@
+int ledPin = 9;
+int analogPin = A0;
+int val = 0;
+
+void setup() {
+  pinMode(ledPin, OUTPUT); // 設定 ledPin 為輸出
+  Serial.begin(9600);      // 初始化序列通訊
+}
+
+void loop() {
+  val = analogRead(analogPin);      // 讀取 A0 的類比輸入值
+  Serial.println(val);              // 印出感測值
+  if(val<100) val = 100;
+  if(val>500) val = 500;
+  int ledDimming = map(val, 100, 800, 0, 255);
+  analogWrite(ledPin, ledDimming);     // 將類比值轉為 PWM 控制 LED 亮度
+  delay(1);                         // 穩定讀取
+}
